@@ -32,7 +32,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok" });
+  res.json({
+    status: "ok",
+    database: mongoose.connection.readyState === 1 ? "connected" : "not_connected"
+  });
 });
 
 app.use("/api/auth", authRoutes);
