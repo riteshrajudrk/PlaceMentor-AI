@@ -1,11 +1,11 @@
 import User from "../models/User.js";
-import LeetcodeStat from "../models/LeetcodeStat.js";
 import Resume from "../models/Resume.js";
 import Mock from "../models/Mock.js";
+import { getCodingSnapshot } from "../utils/dsaAggregator.js";
 
 export const getDashboard = async (req, res) => {
   const user = await User.findById(req.user._id);
-  const leetcode = await LeetcodeStat.findOne({ userId: user._id });
+  const coding = await getCodingSnapshot(user._id);
   const resume = await Resume.findOne({ userId: user._id });
   const mocks = await Mock.find({ userId: user._id, evaluated: true });
 
@@ -17,8 +17,10 @@ export const getDashboard = async (req, res) => {
     readinessScore: user.readinessScore,
     atsScore: resume?.atsScore || null,
     mockAverageScore: mockAvg ? Math.floor(mockAvg) : null,
-    strongestTopic: leetcode?.strongestTopic || null,
-    weakestTopic: leetcode?.weakestTopic || null,
-    dsaScore: leetcode?.dsaScore || null
+    strongestTopic: coding.strongestTopic,
+    weakestTopic: coding.weakestTopic,
+    dsaScore: coding.aggregateScore || null,
+    platformScores: coding.platformScores,
+    totalSolvedAcrossPlatforms: coding.totalSolved
   });
 };

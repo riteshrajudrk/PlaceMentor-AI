@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import GlassCard from "../components/GlassCard";
 import API from "../services/api";
 import { Upload, FileText, CheckCircle, XCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 
 export default function ResumeAnalyzer() {
   const [resume, setResume] = useState(null);
@@ -176,7 +176,7 @@ export default function ResumeAnalyzer() {
 
                 <div className="flex flex-wrap gap-2">
                   {resume.skills.map((skill, i) => (
-                    <motion.span
+                    <Motion.span
                       key={i}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -184,7 +184,7 @@ export default function ResumeAnalyzer() {
                       className="px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full text-green-400 text-sm font-medium"
                     >
                       {skill}
-                    </motion.span>
+                    </Motion.span>
                   ))}
                 </div>
               </GlassCard>
@@ -202,7 +202,7 @@ export default function ResumeAnalyzer() {
 
                 <div className="flex flex-wrap gap-2">
                   {resume.missingSkills.map((skill, i) => (
-                    <motion.span
+                    <Motion.span
                       key={i}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -210,7 +210,7 @@ export default function ResumeAnalyzer() {
                       className="px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-400 text-sm font-medium"
                     >
                       {skill}
-                    </motion.span>
+                    </Motion.span>
                   ))}
                 </div>
               </GlassCard>

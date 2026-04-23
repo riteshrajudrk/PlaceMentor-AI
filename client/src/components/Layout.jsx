@@ -5,6 +5,7 @@ import {
   Code2,
   FileText,
   MessageSquare,
+  Map,
   LogOut,
   Menu,
   X
@@ -20,7 +21,8 @@ export default function Layout({ children }) {
     { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
     { name: "DSA Tracker", path: "/dsa", icon: Code2 },
     { name: "Resume Analyzer", path: "/resume", icon: FileText },
-    { name: "Mock Interview", path: "/mock", icon: MessageSquare }
+    { name: "Mock Interview", path: "/mock", icon: MessageSquare },
+    { name: "Roadmap", path: "/roadmap", icon: Map }
   ];
 
   return (
@@ -38,7 +40,7 @@ export default function Layout({ children }) {
           <div className="p-6 border-b border-white/5">
             <h1 className="text-2xl font-bold tracking-tight">
               <span className="text-[#3B82F6]">Place</span>
-              <span className="text-white">Mentor</span>
+              <span className="text-white">Pilot</span>
             </h1>
             <p className="text-xs text-gray-500 mt-1">
               AI-Powered Placement Prep

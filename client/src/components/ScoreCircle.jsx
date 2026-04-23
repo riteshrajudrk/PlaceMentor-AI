@@ -1,14 +1,7 @@
-import { useEffect, useState } from "react";
-
 export default function ScoreCircle({ score = 0, label = "Score" }) {
   const radius = 70;
   const circumference = 2 * Math.PI * radius;
-  const [offset, setOffset] = useState(circumference);
-
-  useEffect(() => {
-    const progressOffset = circumference - (score / 100) * circumference;
-    setOffset(progressOffset);
-  }, [score]);
+  const offset = circumference - (score / 100) * circumference;
 
   const getColor = () => {
     if (score >= 75) return "#10B981";

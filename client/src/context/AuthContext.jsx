@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import API from "../services/api";
 
 const AuthContext = createContext();
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const { data } = await API.get("/auth/me");
         setUser(data);
-      } catch (err) {
+      } catch {
         localStorage.removeItem("token");
         setUser(null);
       }
@@ -53,13 +53,12 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  // ✅ ADD THIS FUNCTION
-  const updateUser = (updatedData) => {
+  const updateUser = useCallback((updatedData) => {
     setUser((prev) => ({
       ...prev,
       ...updatedData
     }));
-  };
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -69,7 +68,7 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         loading,
-        updateUser  // ✅ expose it
+        updateUser
       }}
     >
       {children}
@@ -77,4 +76,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

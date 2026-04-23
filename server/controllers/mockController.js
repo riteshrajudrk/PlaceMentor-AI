@@ -1,9 +1,6 @@
 import Mock from "../models/Mock.js";
-import Resume from "../models/Resume.js";
-import LeetcodeStat from "../models/LeetcodeStat.js";
-import User from "../models/User.js";
-import { calculateReadinessScore } from "../utils/scoreCalculator.js";
 import axios from "axios";
+import { recalculateReadinessForUser } from "../utils/readinessService.js";
 
 const cleanInterviewQuestion = (raw = "") => {
   let q = raw.trim();
@@ -151,23 +148,7 @@ ${answer}
 
     await mock.save();
 
-    const leetcode = await LeetcodeStat.findOne({ userId: req.user._id });
-    const resume = await Resume.findOne({ userId: req.user._id });
-    const mocks = await Mock.find({ userId: req.user._id, evaluated: true });
-
-    const mockAvg = mocks.length
-      ? mocks.reduce((s, m) => s + m.overallScore, 0) / mocks.length
-      : 0;
-
-    const readiness = calculateReadinessScore(
-      leetcode?.dsaScore || 0,
-      resume?.atsScore || 0,
-      mockAvg
-    );
-
-    await User.findByIdAndUpdate(req.user._id, {
-      readinessScore: readiness
-    });
+    await recalculateReadinessForUser(req.user._id);
 
     res.json(parsed);
 

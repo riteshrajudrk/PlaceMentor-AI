@@ -1,9 +1,7 @@
 import axios from "axios";
 import LeetcodeStat from "../models/LeetcodeStat.js";
-import Resume from "../models/Resume.js";
-import Mock from "../models/Mock.js";
-import User from "../models/User.js";
-import { calculateReadinessScore, calculateDsaScore } from "../utils/scoreCalculator.js";
+import { calculateDsaScore } from "../utils/scoreCalculator.js";
+import { recalculateReadinessForUser } from "../utils/readinessService.js";
 
 export const syncLeetcode = async (req, res) => {
   const { username } = req.params;
@@ -71,19 +69,9 @@ export const syncLeetcode = async (req, res) => {
       strongestTopic,
       weakestTopic
     },
-    { upsert:true, new:true }
+    { upsert: true, returnDocument: "after" }
   );
-
-
-
-  const resume = await Resume.findOne({ userId:req.user._id });
-  const mocks = await Mock.find({ userId:req.user._id, evaluated:true });
-
-  const mockAvg = mocks.length ? mocks.reduce((s,m)=>s+m.overallScore,0)/mocks.length : 0;
-
-  const readiness = calculateReadinessScore(dsaScore, resume?.atsScore||0, mockAvg);
-
-  await User.findByIdAndUpdate(req.user._id,{ readinessScore:readiness });
+  await recalculateReadinessForUser(req.user._id);
 
   res.json(await LeetcodeStat.findOne({ userId:req.user._id }));
 };

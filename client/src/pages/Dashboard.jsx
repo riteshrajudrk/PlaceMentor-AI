@@ -12,20 +12,25 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadDashboard();
-  }, []);
+    let isMounted = true;
 
-  const loadDashboard = async () => {
-    try {
-      const res = await API.get("/dashboard");
-      setDashboard(res.data);
-      updateUser({ readinessScore: res.data.readinessScore });
-    } catch (err) {
-      console.error("Dashboard load error", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    API.get("/dashboard")
+      .then((res) => {
+        if (!isMounted) return;
+        setDashboard(res.data);
+        updateUser({ readinessScore: res.data.readinessScore });
+      })
+      .catch((err) => {
+        console.error("Dashboard load error", err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [updateUser]);
 
   const getColor = (score) => {
     if (!score) return "#6B7280";
@@ -71,8 +76,8 @@ export default function Dashboard() {
           />
 
           <p className="text-gray-400 mt-6 max-w-md text-center">
-            Your readiness score combines DSA (40%), Resume (30%), and
-            Mock Interview (30%)
+            Your readiness score combines Multi-Platform DSA (40%), Resume (30%), and
+            Mock Interview (30%).
           </p>
         </GlassCard>
 
@@ -108,6 +113,18 @@ export default function Dashboard() {
                   Weakest:{" "}
                   <span className="text-red-400 font-mono">
                     {dashboard.weakestTopic}
+                  </span>
+                </p>
+                <p>
+                  LeetCode:{" "}
+                  <span className="text-cyan-300 font-mono">
+                    {dashboard?.platformScores?.leetcode ?? "N/A"}
+                  </span>
+                </p>
+                <p>
+                  Codeforces:{" "}
+                  <span className="text-cyan-300 font-mono">
+                    {dashboard?.platformScores?.codeforces ?? "N/A"}
                   </span>
                 </p>
               </div>
@@ -178,7 +195,7 @@ export default function Dashboard() {
                   Sync LeetCode Stats
                 </p>
                 <p className="text-sm text-gray-400">
-                  Connect your LeetCode profile to track DSA progress
+                  Connect LeetCode and Codeforces for stronger DSA signals
                 </p>
               </div>
             )}

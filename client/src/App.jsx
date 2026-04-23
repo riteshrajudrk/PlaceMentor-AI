@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import DSATracker from "./pages/DSATracker";
 import ResumeAnalyzer from "./pages/ResumeAnalyzer";
 import MockInterview from "./pages/MockInterview";
+import Roadmap from "./pages/Roadmap";
 
 export default function App() {
   return (
@@ -55,6 +56,15 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <MockInterview />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/roadmap"
+            element={
+              <ProtectedRoute>
+                <Roadmap />
               </ProtectedRoute>
             }
           />

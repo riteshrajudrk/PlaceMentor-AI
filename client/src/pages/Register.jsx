@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { Lock, Mail, User, Building, ArrowRight } from "lucide-react";
 
 export default function Register() {
@@ -39,7 +39,7 @@ export default function Register() {
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-[#8B5CF6] rounded-full blur-[120px] opacity-30"></div>
       </div>
 
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -122,7 +122,7 @@ export default function Register() {
             Login here
           </Link>
         </div>
-      </motion.div>
+      </Motion.div>
     </div>
   );
 }

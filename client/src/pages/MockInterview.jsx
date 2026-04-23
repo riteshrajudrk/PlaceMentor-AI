@@ -8,7 +8,6 @@ import {
   Clock,
   Award
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 export default function MockInterview() {
   const [subject, setSubject] = useState("Data Structures");
@@ -21,18 +20,30 @@ export default function MockInterview() {
   const [loading, setLoading] = useState(false);
   const [evaluating, setEvaluating] = useState(false);
 
-  useEffect(() => {
-    loadHistory();
-  }, []);
-
-  const loadHistory = async () => {
+  async function loadHistory() {
     try {
       const res = await API.get("/mock/history");
       setHistory(res.data);
     } catch (err) {
       console.error("History load error", err);
     }
-  };
+  }
+
+  useEffect(() => {
+    let isMounted = true;
+
+    API.get("/mock/history")
+      .then((res) => {
+        if (isMounted) setHistory(res.data);
+      })
+      .catch((err) => {
+        console.error("History load error", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const generateQuestion = async () => {
     setLoading(true);

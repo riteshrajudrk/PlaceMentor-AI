@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 
 export default function GlassCard({
   children,
@@ -7,7 +7,7 @@ export default function GlassCard({
   ...props
 }) {
   return (
-    <motion.div
+    <Motion.div
       className={`glass-card rounded-2xl p-6 ${
         hover ? "hover:border-white/15 cursor-pointer" : ""
       } ${className}`}
@@ -16,6 +16,6 @@ export default function GlassCard({
       {...props}
     >
       {children}
-    </motion.div>
+    </Motion.div>
   );
 }
