@@ -7,9 +7,7 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-/* =====================================================
-   🔥 START INTERVIEW – Generate Question
-===================================================== */
+  //  START INTERVIEW – Generate Question
 
 export const startInterview = async (req, res) => {
   try {
@@ -46,9 +44,7 @@ Rules:
   }
 };
 
-/* =====================================================
-   🔥 SUBMIT INTERVIEW – Evaluate Answer
-===================================================== */
+  //  SUBMIT INTERVIEW – Evaluate Answer
 
 export const submitInterview = async (req, res) => {
   try {
