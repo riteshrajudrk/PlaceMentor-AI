@@ -27,7 +27,7 @@ Rules:
 `;
 
     const response = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instant",
+      model: "openai/gpt-oss-20b",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.3,
       max_tokens: 400,
@@ -80,11 +80,11 @@ Return strictly valid JSON in this format:
 `;
 
     const response = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instant",
+      model: "openai/gpt-oss-20b",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.2,
       max_tokens: 900,
-      response_format: { type: "json_object" }, // 🔥 Important
+      response_format: { type: "json_object" }, 
     });
 
     const parsed = JSON.parse(

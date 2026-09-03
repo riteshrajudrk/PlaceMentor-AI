@@ -45,7 +45,7 @@ Return ONLY valid JSON with this exact shape:
     const aiResponse = await axios.post(
       "https://api.groq.com/openai/v1/chat/completions",
       {
-        model: "llama-3.1-8b-instant",
+        model: "openai/gpt-oss-20b",
         messages: [
           { role: "system", content: "You are an expert technical mentor. Return strict JSON only." },
           { role: "user", content: prompt }

@@ -60,6 +60,7 @@ export default function MockInterview() {
       setQuestion(res.data.question);
       setMockId(res.data.mockId);
     } catch {
+      
       alert("Failed to generate question");
     }
 

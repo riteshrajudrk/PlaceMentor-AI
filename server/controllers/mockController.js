@@ -34,7 +34,7 @@ export const generateQuestion = async (req, res) => {
     const aiResponse = await axios.post(
       "https://api.groq.com/openai/v1/chat/completions",
       {
-        model: "llama-3.1-8b-instant",
+        model: "openai/gpt-oss-20b",
         messages: [
           {
             role: "system",
@@ -79,7 +79,8 @@ Rules:
     });
 
   } catch (err) {
-    console.error(err);
+    
+    console.error(JSON.stringify(err.response?.data, null, 2));
     res.status(500).json({ message: "Failed to generate question" });
   }
 };
@@ -94,7 +95,7 @@ export const evaluateAnswer = async (req, res) => {
     const aiResponse = await axios.post(
       "https://api.groq.com/openai/v1/chat/completions",
       {
-        model: "llama-3.1-8b-instant",
+        model: "openai/gpt-oss-20b",
         messages: [
           {
             role: "system",

@@ -629,7 +629,7 @@ AI is used in:
 
 ### Q58. Which AI provider did you use?
 
-The active controllers use Groq's OpenAI-compatible chat completions API with the `llama-3.1-8b-instant` model.
+The active controllers use Groq's OpenAI-compatible chat completions API with the `openai/gpt-oss-20b` model.
 
 ### Q59. Why did you ask AI to return JSON?
 
